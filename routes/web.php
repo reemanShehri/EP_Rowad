@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AIChatController;
@@ -17,6 +18,14 @@ use App\Http\Controllers\FaqController;  // تأكد أنك تستورد هذا 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/chat-all', [ChatController::class, 'index'])->name('chat.all');
+    Route::post('/chat-all', [ChatController::class, 'store'])->name('chat.store');
+});
+
 
 // صفحة الداشبورد مع middleware التحقق من الدخول
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -39,6 +48,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
   Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 // Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/ai-chat', [AIChatController::class, 'ask']);
+
+Route::get('/chat', [AIChatController::class, 'index'])->name('chat.index');
+
+Route::post('/chat/send', [AIChatController::class, 'chat'])->name('chat.send');
 
     Route::resource('posts', PostController::class);
 

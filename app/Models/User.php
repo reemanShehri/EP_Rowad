@@ -6,7 +6,9 @@ namespace App\Models;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Message;
 use App\Models\Consultation;
+use App\Models\Conversation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,6 +60,19 @@ class User extends Authenticatable
     }
 
 
+
+
+
+    public function conversations()
+{
+    return $this->belongsToMany(Conversation::class, 'conversation_participants')
+                ->withTimestamps();
+}
+
+public function messages()
+{
+    return $this->hasMany(Message::class);
+}
 
 
 

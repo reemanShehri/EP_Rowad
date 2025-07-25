@@ -72,31 +72,26 @@
         </div>
     </div>
 
-    @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatForm = document.getElementById('chat-form');
-            const messageInput = document.getElementById('message-input');
-            const chatContainer = document.getElementById('chat-container');
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatForm = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message-input');
+        const chatContainer = document.getElementById('chat-container');
 
-            // إرسال الرسالة
-            chatForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+        chatForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-                const message = messageInput.value.trim();
-                if (message === '') return;
+            const message = messageInput.value.trim();
+            if (!message) return;
 
-                // إضافة رسالة المستخدم للدردشة
-                addMessageToChat(message, 'user');
+            // إضافة رسالة المستخدم
+            addMessageToChat(message, 'user');
+            messageInput.value = '';
+            showLoadingIndicator();
 
-                // مسح حقل الإدخال
-                messageInput.value = '';
-
-                // إظهار مؤشر تحميل للرد
-                showLoadingIndicator();
-
-                // إرسال الرسالة للخادم (AJAX)
-                fetch("", {
+            try {
+                const response = await fetch("{{ route('chat.send') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -104,72 +99,75 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({ message: message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // إزالة مؤشر التحميل
-                    removeLoadingIndicator();
-
-                    // إضافة رد الذكاء الاصطناعي للدردشة
-                    if (data.response) {
-                        addMessageToChat(data.response, 'ai');
-                    } else {
-                        addMessageToChat("عذراً، حدث خطأ في معالجة طلبك.", 'ai');
-                    }
-                })
-                .catch(error => {
-                    removeLoadingIndicator();
-                    addMessageToChat("عذراً، حدث خطأ في الاتصال بالخادم.", 'ai');
-                    console.error('Error:', error);
                 });
-            });
 
-            // وظيفة لإضافة رسالة للدردشة
-            function addMessageToChat(message, sender) {
-                const templateId = sender === 'user' ? 'user-message-template' : 'ai-message-template';
-                const template = document.getElementById(templateId).cloneNode(true);
+                if (!response.ok) throw new Error('Network response was not ok');
 
-                template.classList.remove('hidden');
-                template.querySelector('.message-content').textContent = message;
+                const data = await response.json();
 
-                chatContainer.appendChild(template);
+                removeLoadingIndicator();
 
-                // التمرير للأسفل لرؤية آخر رسالة
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            // إظهار مؤشر تحميل
-            function showLoadingIndicator() {
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'flex justify-start';
-                loadingDiv.id = 'loading-indicator';
-                loadingDiv.innerHTML = `
-                    <div class="max-w-xs md:max-w-md lg:max-w-lg bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
-                        <div class="flex space-x-2">
-                            <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
-                            <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.2s"></div>
-                            <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.4s"></div>
-                        </div>
-                    </div>
-                `;
-
-                chatContainer.appendChild(loadingDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            // إزالة مؤشر تحميل
-            function removeLoadingIndicator() {
-                const indicator = document.getElementById('loading-indicator');
-                if (indicator) {
-                    indicator.remove();
+                if (data.error) {
+                    addMessageToChat(data.error, 'ai');
+                } else {
+                    addMessageToChat(data.response, 'ai');
                 }
-            }
 
-            // التركيز على حقل الإدخال عند تحميل الصفحة
-            messageInput.focus();
+            } catch (error) {
+                console.error('Error:', error);
+                removeLoadingIndicator();
+                addMessageToChat('حدث خطأ في الاتصال بالخادم. يرجى المحاولة لاحقاً.', 'ai');
+            }
         });
-    </script>
-    @endpush
+
+        function addMessageToChat(message, sender) {
+            const templateId = `${sender}-message-template`;
+            const template = document.getElementById(templateId).cloneNode(true);
+
+            template.classList.remove('hidden');
+            template.querySelector('.message-content').textContent = message;
+
+            // تحديث الوقت
+            const now = new Date();
+            template.querySelector('p.text-xs').textContent =
+                `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+            chatContainer.appendChild(template);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function showLoadingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'flex justify-start';
+            indicator.id = 'loading-indicator';
+            indicator.innerHTML = `
+                <div class="max-w-xs md:max-w-md lg:max-w-lg bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
+                    <div class="flex space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
+                        <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            chatContainer.appendChild(indicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function removeLoadingIndicator() {
+            const indicator = document.getElementById('loading-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        // إرسال بالضغط على Enter
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    });
+</script>
+@endpush
 
     @push('styles')
     <style>

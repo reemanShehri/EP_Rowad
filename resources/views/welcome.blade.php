@@ -167,9 +167,9 @@
                             <a href="{{ route('register') }}" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">
                                 ابدأ الآن <i class="fas fa-arrow-left ml-2"></i>
                             </a>
-                            <a href="#" class="px-8 py-3 rounded-full text-lg font-medium border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition">
+                            {{-- <a href="#" class="px-8 py-3 rounded-full text-lg font-medium border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition">
                                 <i class="fas fa-play-circle ml-2"></i> شاهد الفيديو
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                     <div class="md:w-1/2">

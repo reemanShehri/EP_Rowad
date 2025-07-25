@@ -66,7 +66,7 @@
                     <span>التواصل</span>
                 </a>
 
-                <a href="{{ route('contact.index') }}" class="flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-beige-50">
+                <a href="{{ route('services.index') }}" class="flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-beige-50">
                     <i class="fas fa-cogs ml-3 text-beige-600"></i>
                     <span>الخدمات</span>
                 </a>

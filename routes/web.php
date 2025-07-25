@@ -7,6 +7,7 @@ use App\Http\Controllers\AIChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ConsultationController;
@@ -37,9 +38,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/faqs', [FaqController::class, 'index'])->name('faqs.index');
 
   Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-
+// Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
     Route::resource('posts', PostController::class);
+
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
     // المنشورات
    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
@@ -56,7 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
   Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
 
-
+Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
   Route::post('/like', [LikeController::class, 'store'])->name('like');
 
     Route::patch('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');

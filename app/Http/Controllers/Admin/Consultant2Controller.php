@@ -9,24 +9,40 @@ use App\Models\User; // نفترض المستشارين في جدول users مع
 class Consultant2Controller extends Controller
 {
     public function index(Request $request)
-    {
-        $query = User::where('role', 'consultant'); // جلب المستشارين فقط
+{
+    $query = User::where('user_type', 'consultant');
 
-        // لو فيه تخصص مختار، نفلتر على أساسه
-        if ($request->has('specialization') && $request->specialization != '') {
-            $query->where('specialization', $request->specialization);
-        }
-
-        // جلب النتائج
-        $consultants = $query->get();
-
-        // جلب التخصصات المتوفرة لقائمة الفلترة (اختياري)
-        $specializations = User::where('role', 'consultant')
-            ->select('specialization')
-            ->distinct()
-            ->pluck('specialization');
-
-        return view('consultants.index', compact('consultants', 'specializations'));
+    if ($request->has('specialization') && $request->specialization != '') {
+        $query->where('specialization', $request->specialization);
     }
+
+    // استبدال get() بـ paginate()
+    $consultants = $query->paginate(10); // 10 عناصر لكل صفحة
+
+    $specializations = User::where('user_type', 'consultant')
+        ->select('specialization')
+        ->distinct()
+        ->pluck('specialization');
+
+    return view('consultants.index', compact('consultants', 'specializations'));
+}
+
+//     public function index(Request $request)
+// {
+//     $query = User::where('user_type', 'consultant'); // تحميل العلاقة مسبقاً
+
+//     if ($request->has('specialization') && $request->specialization != '') {
+//         $query->where('specialization', $request->specialization);
+//     }
+
+//     $consultants = $query->get();
+
+//     $specializations = User::where('user_type', 'consultant')
+//         ->select('specialization')
+//         ->distinct()
+//         ->pluck('specialization');
+
+//     return view('consultants.index', compact('consultants', 'specializations'));
+// }
 }
 

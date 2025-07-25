@@ -87,38 +87,99 @@
                     {{-- قسم نموذج التواصل --}}
                     <div class="md:w-1/2 bg-gray-50 p-8">
                         <h2 class="text-2xl font-bold text-gray-800 mb-6">أرسل لنا رسالة</h2>
-                        <form class="space-y-5">
-                            <div>
-                                <label for="name" class="block text-gray-700 mb-2">الاسم الكامل</label>
-                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل اسمك">
-                            </div>
-                            <div>
-                                <label for="email" class="block text-gray-700 mb-2">البريد الإلكتروني</label>
-                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل بريدك الإلكتروني">
-                            </div>
-                            <div>
-                                <label for="phone" class="block text-gray-700 mb-2">رقم الهاتف</label>
-                                <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل رقم هاتفك">
-                            </div>
-                            <div>
-                                <label for="subject" class="block text-gray-700 mb-2">الموضوع</label>
-                                <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]">
-                                    <option value="">اختر موضوع الرسالة</option>
-                                    <option value="consultation">استشارة أعمال</option>
-                                    <option value="investment">فرص استثمارية</option>
-                                    <option value="partnership">شراكة تجارية</option>
-                                    <option value="other">استفسار آخر</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="message" class="block text-gray-700 mb-2">الرسالة</label>
-                                <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل رسالتك هنا..."></textarea>
-                            </div>
+@if(session('success'))
+    <div id="success-message" class="text-green-600 font-bold mb-4">
+        {{ session('success') }}
+    </div>
 
-                            <button type="submit" class="w-full gold-bg text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#b89a64] transition duration-300">
-                                إرسال الرسالة <i class="fas fa-paper-plane mr-2"></i>
-                            </button>
-                        </form>
+    <script>
+        setTimeout(function() {
+            const successMsg = document.getElementById('success-message');
+            if (successMsg) {
+                successMsg.style.display = 'none';
+            }
+        }, 2500); // 2500 milliseconds = 2.5 seconds
+    </script>
+@endif
+
+
+
+{{-- <form method="POST" action="{{ route('contact.send') }}" class="space-y-5">
+    @csrf
+
+
+
+    <div>
+        <label for="name" class="block text-gray-700 mb-2">الاسم الكامل</label>
+        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل اسمك">
+    </div>
+
+    <div>
+        <label for="email" class="block text-gray-700 mb-2">البريد الإلكتروني</label>
+        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل بريدك الإلكتروني">
+    </div>
+
+    <div>
+        <label for="phone" class="block text-gray-700 mb-2">رقم الهاتف</label>
+        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل رقم هاتفك">
+    </div>
+
+    <div>
+        <label for="subject" class="block text-gray-700 mb-2">الموضوع</label>
+        <select id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]">
+            <option value="">اختر موضوع الرسالة</option>
+            <option value="consultation">استشارة أعمال</option>
+            <option value="investment">فرص استثمارية</option>
+            <option value="partnership">شراكة تجارية</option>
+            <option value="other">استفسار آخر</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="message" class="block text-gray-700 mb-2">الرسالة</label>
+        <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#c2a675]" placeholder="أدخل رسالتك هنا..."></textarea>
+    </div>
+
+    <button type="submit" class="w-full gold-bg text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#b89a64] transition duration-300">
+        إرسال الرسالة <i class="fas fa-paper-plane mr-2"></i>
+    </button>
+</form> --}}
+
+
+<form action="mailto:your-email@example.com" method="post" enctype="text/plain" class="space-y-5">
+    <div>
+        <label for="name" class="block text-gray-700 mb-2">الاسم الكامل</label>
+        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="أدخل اسمك" required>
+    </div>
+    <div>
+        <label for="email" class="block text-gray-700 mb-2">البريد الإلكتروني</label>
+        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="أدخل بريدك الإلكتروني" required>
+    </div>
+    <div>
+        <label for="phone" class="block text-gray-700 mb-2">رقم الهاتف</label>
+        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="أدخل رقم هاتفك">
+    </div>
+    <div>
+        <label for="subject" class="block text-gray-700 mb-2">الموضوع</label>
+        <select id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            <option value="">اختر موضوع الرسالة</option>
+            <option value="consultation">استشارة أعمال</option>
+            <option value="investment">فرص استثمارية</option>
+            <option value="partnership">شراكة تجارية</option>
+            <option value="other">استفسار آخر</option>
+        </select>
+    </div>
+    <div>
+        <label for="message" class="block text-gray-700 mb-2">الرسالة</label>
+        <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="أدخل رسالتك هنا..." required></textarea>
+    </div>
+   <button type="submit" class="w-full bg-yellow-800 text-white py-3 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300">
+    إرسال الرسالة <i class="fas fa-paper-plane mr-2"></i>
+</button>
+
+</form>
+
+
                     </div>
                 </div>
             </div>

@@ -58,6 +58,10 @@ class User extends Authenticatable
     }
 
 
+
+
+
+
     // أضف هذه العلاقات إلى نموذج User
 public function posts()
 {

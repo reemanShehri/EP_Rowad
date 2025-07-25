@@ -125,10 +125,10 @@
                         <div class="p-3 rounded-full bg-purple-50 text-purple-600 mr-4">
                             <i class="fas fa-comments"></i>
                         </div>
-                        {{-- <div>
-                            <p class="text-sm text-gray-500">تعليقاتي</p>
-                            <p class="text-2xl font-semibold text-gray-800">{{ $commentsCount }}</p>
-                        </div> --}}
+                       <div>
+                            <p class="text-sm text-gray-500">عدد رواد الاعمال</p>
+                            <p class="text-2xl font-semibold text-gray-800">{{ $entrepreneursCount  }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

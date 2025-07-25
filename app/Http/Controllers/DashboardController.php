@@ -23,31 +23,33 @@ class DashboardController extends Controller
 
             // استشارات المستخدم القادمة
             'upcomingConsultations' => Consultation::where('user_id', $user->id)
-                                                ->where('scheduled_at', '>', now())
-                                                ->count(),
+                                                    ->where('scheduled_at', '>', now())
+                                                    ->count(),
 
             // عدد المستشارين المتاحين (المستخدمون الذين لديهم دور مستشار)
-            'consultantsCount' => User::where('role', 'consultant')->count(),
+            'consultantsCount' => User::where('user_type', 'consultant')->count(),
+
+            // ✅ عدد رواد الأعمال
+            'entrepreneursCount' => User::where('user_type', 'entrepreneur')->count(),
 
             // الاستشارات القادمة للمستخدم مع العلاقات
             'recentConsultations' => Consultation::with('consultant')
-                                              ->where('user_id', $user->id)
-                                              ->where('scheduled_at', '>', now())
-                                              ->orderBy('scheduled_at', 'asc')
-                                              ->limit(5)
-                                              ->get(),
+                                                  ->where('user_id', $user->id)
+                                                  ->where('scheduled_at', '>', now())
+                                                  ->orderBy('scheduled_at', 'asc')
+                                                  ->limit(5)
+                                                  ->get(),
 
             // المستشارون المتاحون (يمكن إضافة شروط إضافية مثل التوفر)
-            'availableConsultants' => User::where('role', 'consultant')
-                                       ->with('consultantProfile')
-                                       ->limit(5)
-                                       ->get(),
+            'availableConsultants' => User::where('user_type', 'consultant')
+                                           ->limit(5)
+                                           ->get(),
 
             // أحدث المنشورات (يمكن تخصيصها حسب احتياجاتك)
             'latestPosts' => Post::with(['user', 'category'])
-                               ->latest()
-                               ->limit(3)
-                               ->get(),
+                                 ->latest()
+                                 ->limit(3)
+                                 ->get(),
         ]);
     }
 }

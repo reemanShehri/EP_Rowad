@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\SimpleChatController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\Admin\Consultant2Controller;
 use App\Http\Controllers\FaqController;  // تأكد أنك تستورد هذا ال Controller
@@ -19,12 +20,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::delete('/messages/{id}', [SimpleChatController::class, 'destroy'])
+     ->name('messages.destroy')
+     ->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/chat-all', [ChatController::class, 'index'])->name('chat.all');
-    Route::post('/chat-all', [ChatController::class, 'store'])->name('chat.store');
+    Route::get('/simple-chat', [SimpleChatController::class, 'index'])->name('simple-chat.index');
+    Route::post('/simple-chat', [SimpleChatController::class, 'store'])->name('simple-chat.store');
+    Route::delete('/simple-chat/{message}', [SimpleChatController::class, 'destroy'])->name('messages.destroy');
 });
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/chat-all', [ChatController::class, 'index'])->name('chat.all');
+//     Route::post('/chat-all', [ChatController::class, 'store'])->name('chat.store');
+// });
 
 
 // صفحة الداشبورد مع middleware التحقق من الدخول

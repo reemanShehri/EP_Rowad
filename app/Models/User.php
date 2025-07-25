@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Message;
 use App\Models\Consultation;
 use App\Models\Conversation;
+use App\Models\SimpleMessage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -75,7 +76,11 @@ public function messages()
 }
 
 
-
+// في app/Models/User.php
+public function simpleMessages()
+{
+    return $this->hasMany(SimpleMessage::class);
+}
 
     // أضف هذه العلاقات إلى نموذج User
 public function posts()

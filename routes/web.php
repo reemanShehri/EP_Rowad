@@ -19,15 +19,12 @@ use App\Http\Controllers\FaqController;  // تأكد أنك تستورد هذا 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::delete('/messages/{id}', [SimpleChatController::class, 'destroy'])
-     ->name('messages.destroy')
-     ->middleware('auth');
+Route::delete('/messages/{id}', [SimpleChatController::class, 'destroy'])->name('messages.destroy');
+Route::put('/messages/{id}', [SimpleChatController::class, 'update'])->name('messages.update');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/simple-chat', [SimpleChatController::class, 'index'])->name('simple-chat.index');
     Route::post('/simple-chat', [SimpleChatController::class, 'store'])->name('simple-chat.store');
-    Route::delete('/simple-chat/{message}', [SimpleChatController::class, 'destroy'])->name('messages.destroy');
 });
 
 // Route::middleware(['auth'])->group(function () {

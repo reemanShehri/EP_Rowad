@@ -16,7 +16,8 @@ class SimpleChatController extends Controller
     {
         // جلب آخر 50 رسالة مع معلومات المستخدم الأساسية
         $messages = SimpleMessage::latest()
-            ->with('user:id,name') // جلب فقط id و name من المستخدم
+            ->with('user')
+// جلب فقط id و name من المستخدم
             ->take(50)
             ->get()
             ->reverse(); // لعرض الأقدم فالأحدث
@@ -58,12 +59,12 @@ class SimpleChatController extends Controller
 public function destroy($id)
 {
     try {
-        $message = Message::findOrFail($id);
+        $message = SimpleMessage::findOrFail($id);
 
         if ($message->user_id !== auth()->id()) {
             return response()->json([
                 'success' => false,
-                'message' => 'غير مصرح لك بحذف هذه الرسالة'
+                'message' => 'غير مسموح لك بحذف هذه الرسالة'
             ], 403);
         }
 
@@ -71,7 +72,42 @@ public function destroy($id)
 
         return response()->json([
             'success' => true,
-            'message' => 'تم الحذف بنجاح'
+            'message' => 'تم حذف الرسالة بنجاح'
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'حدث خطأ: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+
+
+
+public function update(Request $request, $id)
+{
+    try {
+        $message = SimpleMessage::findOrFail($id);
+
+        if ($message->user_id !== auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'غير مسموح لك بتعديل هذه الرسالة'
+            ], 403);
+        }
+
+        $request->validate([
+            'content' => 'required|string|max:1000'
+        ]);
+
+        $message->update(['content' => $request->content]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تحديث الرسالة بنجاح',
+            'updated_content' => $message->content
         ]);
 
     } catch (\Exception $e) {

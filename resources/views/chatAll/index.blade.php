@@ -10,26 +10,149 @@
             <div class="bg-white shadow-md rounded-lg p-6">
                 <!-- منطقة الرسائل -->
                 <div id="chat-container" class="h-96 overflow-y-auto mb-4 p-4 bg-gray-50 rounded border">
-                    @foreach($messages as $message)
+     @foreach($messages as $message)
                     <div id="message-{{ $message->id }}" class="mb-4 flex {{ $message->user_id == auth()->id() ? 'justify-end' : 'justify-start' }}">
                         <div class="max-w-xs md:max-w-md bg-{{ $message->user_id == auth()->id() ? 'blue-100' : 'gray-100' }} rounded-lg p-3">
                             <div class="flex justify-between items-center">
                                 <div class="font-semibold text-sm">
                                     {{ $message->user->name }}
+                                    <span class="text-xs text-gray-500 ml-1">
+                    ({{ $message->user->user_type }})
+                </span>
+
                                 </div>
-                                @if($message->user_id == auth()->id())
-                                <button onclick="deleteMessage({{ $message->id }})" class="text-red-500 hover:text-red-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                </button>
-                                @endif
+  <!-- صورة المستخدم -->
+@php
+    $user = auth()->user();
+    $avatar = $user->avatar
+        ? asset('images/profile_photos/' . Auth::user()->avatar)
+        : 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&background=random';
+@endphp
+<img src="{{ $avatar }}"
+     class="h-10 w-10 rounded-full object-cover border-2 border-gray-300"
+     alt="{{ $user->name }}">
+
+     <br>
+
+
+
+
+
+            <script>
+
+                // دالة بدء التعديل
+function startEdit(messageId, currentContent) {
+    const contentElement = document.getElementById(`message-content-${messageId}`);
+    const editForm = `
+        <div class="flex items-center">
+            <input type="text" id="edit-input-${messageId}" value="${currentContent}"
+                   class="flex-1 border rounded-l-lg px-2 py-1 focus:outline-none">
+            <button onclick="submitEdit(${messageId})" class="bg-green-500 text-white px-2 py-1 rounded-r-lg">
+                حفظ
+            </button>
+            <button onclick="cancelEdit(${messageId}, \`${currentContent}\`)" class="ml-2 text-gray-500">
+                إلغاء
+            </button>
+        </div>
+    `;
+    contentElement.innerHTML = editForm;
+    document.getElementById(`edit-input-${messageId}`).focus();
+}
+
+// دالة إرسال التعديل
+async function submitEdit(messageId) {
+    const newContent = document.getElementById(`edit-input-${messageId}`).value.trim();
+
+    if (!newContent) {
+        alert('لا يمكن ترك الرسالة فارغة');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/messages/${messageId}`, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: newContent })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            document.getElementById(`message-content-${messageId}`).textContent = newContent;
+        } else {
+            alert(result.message || 'فشل في التحديث');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('حدث خطأ أثناء التحديث');
+    }
+}
+
+// دالة إلغاء التعديل
+function cancelEdit(messageId, originalContent) {
+    document.getElementById(`message-content-${messageId}`).textContent = originalContent;
+}
+
+// دالة الحذف المعدلة
+async function deleteMessage(messageId) {
+    if (!confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
+
+    try {
+        const response = await fetch(`/messages/${messageId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            document.getElementById(`message-${messageId}`).remove();
+        } else {
+            alert(result.message || 'فشل في الحذف');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('حدث خطأ أثناء الحذف');
+    }
+}
+</script>
+
+
+
                             </div>
                             <p class="text-gray-800 mt-1">{{ $message->content }}</p>
                             <div class="text-xs text-gray-500 mt-1">
                                 {{ $message->created_at->diffForHumans() }}
                             </div>
+
+
+
+                                 @if($message->user_id == auth()->id())
+            <div class="flex space-x-2">
+
+
+                <button onclick="deleteMessage({{ $message->id }})"
+                    class="text-gray-600 hover:text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+
+
+            </div>
+            @endif
+
                         </div>
+
+
                     </div>
                     @endforeach
                 </div>

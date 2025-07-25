@@ -1,7 +1,9 @@
 <x-app-layout>
 
 
-          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- زر فتح/إغلاق السايد بار -->
@@ -40,37 +42,43 @@
             </div>
 
             <!-- قائمة التنقل -->
-            <nav class="flex-1 p-4 space-y-2 overflow-y-auto bg-white">
-                <a href="{{ route('dashboard') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
-                    <i class="fas fa-home ml-3 text-beige-600"></i>
-                    <span>الرئيسية</span>
-                </a>
+          <nav class="flex-1 p-4 space-y-2 overflow-y-auto bg-white">
+    <a href="{{ route('dashboard') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-home ml-3 text-beige-600"></i>
+        <span>الرئيسية</span>
+    </a>
 
-                <a href="{{ route('consultants.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('consultants.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
-                    <i class="fas fa-user-tie ml-3 text-beige-600"></i>
-                    <span>المستشارون</span>
-                </a>
+    <a href="{{ route('consultants.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('consultants.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-user-tie ml-3 text-beige-600"></i>
+        <span>المستشارون</span>
+    </a>
 
-                <a href="{{ route('posts.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('posts.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
-                    <i class="fas fa-newspaper ml-3 text-beige-600"></i>
-                    <span>المنشورات</span>
-                </a>
+    <a href="{{ route('posts.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('posts.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-bullhorn ml-3 text-beige-600"></i>
+        <span>المنشورات</span>
+    </a>
 
-                <a href="{{ route('ai-chat.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('ai-chat.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
-                    <i class="fas fa-robot ml-3 text-beige-600"></i>
-                    <span>الدردشة الذكية</span>
-                </a>
+    <a href="{{ route('ai-chat.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('ai-chat.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-brain ml-3 text-beige-600"></i>
+        <span>الدردشة الذكية</span>
+    </a>
 
-                <a href="{{ route('contact.index') }}" class="flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-beige-50">
-                    <i class="fas fa-envelope ml-3 text-beige-600"></i>
-                    <span>التواصل</span>
-                </a>
+    <a href="{{ route('contact.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('contact.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-envelope-open-text ml-3 text-beige-600"></i>
+        <span>التواصل</span>
+    </a>
 
-                <a href="{{ route('services.index') }}" class="flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-beige-50">
-                    <i class="fas fa-cogs ml-3 text-beige-600"></i>
-                    <span>الخدمات</span>
-                </a>
-            </nav>
+    <a href="{{ route('services.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('services.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-concierge-bell ml-3 text-beige-600"></i>
+        <span>الخدمات</span>
+    </a>
+
+    <a href="{{ route('simple-chat.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('simple-chat.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+        <i class="fas fa-comments ml-3 text-beige-600"></i>
+        <span>الدردشة الجماعية</span>
+    </a>
+</nav>
+
 
             <!-- تسجيل الخروج -->
             <div class="p-4 border-t border-beige-200 bg-white">
@@ -396,50 +404,57 @@
 </div>
 
             <!-- الأسئلة الشائعة -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-beige-200">
-                <h3 class="text-lg font-medium mb-4 flex items-center text-gray-800">
-                    <i class="fas fa-question-circle text-purple-500 ml-2"></i>
-                    الأسئلة الشائعة
-                </h3>
+         <div class="bg-white p-6 rounded-xl shadow-sm border border-beige-200">
+    <h3 class="text-lg font-medium mb-4 flex items-center text-gray-800">
+        <i class="fas fa-question-circle text-purple-500 ml-2"></i>
+        الأسئلة الشائعة
+    </h3>
 
-                <div class="space-y-3">
-                    <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">
-                        <details class="group">
-                            <summary class="flex justify-between items-center p-4 cursor-pointer list-none bg-beige-50 hover:bg-beige-100 transition-colors">
-                                <span class="font-medium text-gray-800">كيف يمكنني حجز استشارة؟</span>
-                                <i class="fas fa-chevron-down text-beige-600 group-open:rotate-180 transform transition"></i>
-                            </summary>
-                            <div class="p-4 bg-white border-t border-beige-200 text-gray-700">
-                                يمكنك حجز استشارة بالذهاب إلى صفحة المستشارين واختيار المستشار المناسب ثم النقر على زر "حجز استشارة" وملء النموذج.
-                            </div>
-                        </details>
-                    </div>
-
-                    <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">
-                        <details class="group">
-                            <summary class="flex justify-between items-center p-4 cursor-pointer list-none bg-beige-50 hover:bg-beige-100 transition-colors">
-                                <span class="font-medium text-gray-800">هل يمكنني إلغاء الاستشارة؟</span>
-                                <i class="fas fa-chevron-down text-beige-600 group-open:rotate-180 transform transition"></i>
-                            </summary>
-                            <div class="p-4 bg-white border-t border-beige-200 text-gray-700">
-                                نعم، يمكنك إلغاء الاستشارة قبل 24 ساعة من موعدها عبر صفحة "الاستشارات القادمة".
-                            </div>
-                        </details>
-                    </div>
-
-                    <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">
-                        <details class="group">
-                            <summary class="flex justify-between items-center p-4 cursor-pointer list-none bg-beige-50 hover:bg-beige-100 transition-colors">
-                                <span class="font-medium text-gray-800">كيف أتصل بالمستشار؟</span>
-                                <i class="fas fa-chevron-down text-beige-600 group-open:rotate-180 transform transition"></i>
-                            </summary>
-                            <div class="p-4 bg-white border-t border-beige-200 text-gray-700">
-                                يتم التواصل عبر المنصة في الوقت المحدد للاستشارة، وسيتم إرسال رابط الجلسة إلى بريدك الإلكتروني.
-                            </div>
-                        </details>
-                    </div>
+    <div class="space-y-3">
+        <!-- سؤال 1 -->
+        <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">
+            <details class="group">
+                <summary class="flex justify-between items-center p-4 cursor-pointer list-none bg-beige-50 hover:bg-beige-100 transition-colors">
+                    <span class="font-medium text-gray-800">كيف يمكنني إنشاء حساب جديد؟</span>
+                    <i class="fas fa-chevron-down text-beige-600 group-open:rotate-180 transform transition"></i>
+                </summary>
+                <div class="p-4 bg-white border-t border-beige-200 text-gray-700">
+                    يمكنك إنشاء حساب من خلال صفحة التسجيل بإدخال بريدك الإلكتروني وكلمة المرور، ثم تفعيل الحساب عبر الرابط المرسل إلى بريدك.
                 </div>
-            </div>
+            </details>
+        </div>
+
+        <!-- سؤال 2 -->
+        <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">
+            <details class="group">
+                <summary class="flex justify-between items-center p-4 cursor-pointer list-none bg-beige-50 hover:bg-beige-100 transition-colors">
+                    <span class="font-medium text-gray-800">كيف أشارك منشورًا أو سؤالًا؟</span>
+                    <i class="fas fa-chevron-down text-beige-600 group-open:rotate-180 transform transition"></i>
+                </summary>
+                <div class="p-4 bg-white border-t border-beige-200 text-gray-700">
+                    من صفحة المنتدى أو لوحة النقاش، يمكنك الضغط على "إضافة منشور" وكتابة السؤال أو المعلومة التي تريد مشاركتها.
+                </div>
+            </details>
+        </div>
+
+        <!-- سؤال 3 -->
+    
+
+        <!-- سؤال 4 -->
+        <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">
+            <details class="group">
+                <summary class="flex justify-between items-center p-4 cursor-pointer list-none bg-beige-50 hover:bg-beige-100 transition-colors">
+                    <span class="font-medium text-gray-800">هل يمكنني التواصل مع مستشار جامعي؟</span>
+                    <i class="fas fa-chevron-down text-beige-600 group-open:rotate-180 transform transition"></i>
+                </summary>
+                <div class="p-4 bg-white border-t border-beige-200 text-gray-700">
+                    نعم، يمكنك الدخول إلى صفحة المستشارين واختيار مستشارك المناسب للتواصل أو حجز موعد.
+                </div>
+            </details>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 

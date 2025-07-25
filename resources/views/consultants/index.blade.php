@@ -35,26 +35,19 @@
             <div class="flex items-center gap-4 mb-5">
                 <!-- صورة المستشار -->
 
-                {{--      <div class="shrink-0">
-                        @php
-                            $user = auth()->user();
-                            $avatar = $user->avatar
-                                ? asset('images/profile_photos/' . Auth::user()->avatar)
-                                : 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&background=random';
-                        @endphp
-                        <img src="{{ $avatar }}"
-                             class="h-10 w-10 rounded-full object-cover border-2 border-gray-300"
-                             alt="{{ $user->name }}">
-                    </div> --}}
                 @php
-                    $avatar = $consultant->avatar
-                        ? asset('images/profile_photos/' . Auth::user()->avatar)
-                        : 'https://ui-avatars.com/api/?name='.urlencode($consultant->name).'&background=beige&color=fff&size=200';
-                @endphp
-                <div class="relative">
-                    <img src="{{ $avatar }}"
-                         class="w-16 h-16 rounded-full object-cover border-2 border-beige-300 group-hover:border-beige-500 transition-colors duration-300"
-                         alt="{{ $consultant->name }}">
+        $avatar = $consultant->avatar
+            ? asset('images/profile_photos/' . $consultant->avatar)
+            : 'https://ui-avatars.com/api/?name=' . urlencode($consultant->name) . '&background=beige&color=fff&size=200';
+    @endphp
+
+<div class="relative flex items-center space-x-4 mb-4">
+    <img src="{{ $avatar }}" alt="{{ $consultant->name }}" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
+    <div>
+        <div class="font-bold text-lg">{{ $consultant->name }}</div>
+        <div class="text-sm text-gray-500">{{ $consultant->specialization }}</div>
+    </div>
+
 
 
                     <div class="absolute -bottom-1 -right-1 bg-beige-500 rounded-full p-1">

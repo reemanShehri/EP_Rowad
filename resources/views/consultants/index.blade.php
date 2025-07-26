@@ -56,7 +56,7 @@
                 </div>
 
                 <!-- الاسم والتخصص -->
-                <div>
+                {{-- <div>
                     <h3 class="font-bold text-lg text-gray-800 group-hover:text-beige-700 transition-colors duration-300">
                         {{ $consultant->name }}
                     </h3>
@@ -64,7 +64,7 @@
                         <i class="fas fa-briefcase mr-1 text-xs"></i>
                         {{ $consultant->specialization }}
                     </span>
-                </div>
+                </div> --}}
             </div>
 
             <!-- معلومات المستشار -->

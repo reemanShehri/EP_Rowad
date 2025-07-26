@@ -74,11 +74,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-3 space-x-reverse">
                                 <!-- هل هو سؤال؟ -->
-                                <div class="flex items-center">
-                                    <input type="checkbox" name="is_question" id="is_question" value="1"
-                                           class="w-4 h-4 text-beige-600 border-beige-300 rounded focus:ring-beige-500">
-                                    <label for="is_question" class="mr-2 text-gray-700 text-sm">سؤال؟</label>
-                                </div>
+                             
                             </div>
 
                             <!-- زر النشر -->

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('الملف الشخصي') }}
+            {{ __('Profile') }}
         </h2>
     </x-slot>
 
@@ -46,7 +46,8 @@
                                 file:text-sm file:font-semibold
                                 file:bg-gray-50 file:text-gray-700
                                 hover:file:bg-gray-100">
-                        </div>
+<div style="color: gray">{{ Auth::user()->user_type }}</div>                        </div>
+
                     </div>
 
                     <!-- المعلومات الأساسية -->
@@ -82,6 +83,10 @@
                                 value="{{ old('specialization', Auth::user()->specialization) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         </div>
+
+
+
+
 
                         <div>
                             <label for="experience" class="block text-sm font-medium text-gray-700">سنوات الخبرة</label>

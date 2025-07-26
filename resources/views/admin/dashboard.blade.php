@@ -16,9 +16,9 @@
                         ['icon' => 'newspaper', 'route' => 'admin.posts.index', 'title' => 'المنشورات', 'count' => \App\Models\Post::count()],
                         ['icon' => 'comments', 'route' => 'admin.comments.index', 'title' => 'التعليقات', 'count' => \App\Models\Comment::count()],
                         ['icon' => 'cogs', 'route' => 'admin.services.index', 'title' => 'الخدمات', 'count' => \App\Models\Service::count()],
-                        ['icon' => 'thumbs-up', 'route' => 'admin.likes.index', 'title' => 'الإعجابات', 'count' => \App\Models\Like::count()],
+                        // ['icon' => 'thumbs-up', 'route' => 'admin.likes.index', 'title' => 'الإعجابات', 'count' => \App\Models\Like::count()],
                         ['icon' => 'users', 'route' => 'admin.simple-chats.index', 'title' => 'الدردشة الجماعية', 'count' => \App\Models\SimpleMessage::count()],
-                        ['icon' => 'list', 'route' => 'admin.category.index', 'title' => 'التصنيفات', 'count' => \App\Models\Category::count()],
+                        // ['icon' => 'list', 'route' => 'admin.category.index', 'title' => 'التصنيفات', 'count' => \App\Models\Category::count()],
                     ] as $item)
                     <a href="{{ route($item['route']) }}" class="group">
                         <div class="h-full bg-white rounded-xl shadow-sm border border-gray-200 p-4 text-center transition-all hover:shadow-md hover:border-indigo-200">

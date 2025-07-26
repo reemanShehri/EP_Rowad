@@ -23,7 +23,6 @@ class AIChatController extends Controller
         ]);
 
         try {
-            // استبدل هذا بالاتصال بAPI الذكاء الاصطناعي الخاص بك
             $response = $this->getAIResponse($request->message);
 
             return response()->json([

@@ -77,6 +77,19 @@
         <i class="fas fa-comments ml-3 text-beige-600"></i>
         <span>الدردشة الجماعية</span>
     </a>
+
+
+     @auth
+    @if(auth()->user()->role === 'admin')
+        <a href="{{ route('admin.dashboard') }}"
+           class="flex items-center p-3 rounded-lg transition-colors
+           {{ request()->routeIs('admin.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+            <i class="fas fa-user-shield ml-3 text-beige-600"></i>
+            <span>لوحة تحكم الأدمن</span>
+        </a>
+    @endif
+@endauth
+
 </nav>
 
 
@@ -438,7 +451,7 @@
         </div>
 
         <!-- سؤال 3 -->
-    
+
 
         <!-- سؤال 4 -->
         <div class="border border-beige-200 rounded-lg overflow-hidden transition-all">

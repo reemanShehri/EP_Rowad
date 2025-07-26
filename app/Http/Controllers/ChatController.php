@@ -16,7 +16,7 @@ class ChatController extends Controller
             ->latest()
             ->take(50)
             ->get()
-            ->reverse(); // لعرض الأقدم فالأحدث
+            ->reverse();
 
         return view('chatAll.index', compact('messages'));
     }
@@ -59,7 +59,6 @@ class ChatController extends Controller
             ]);
         }
 
-        // إنشاء رسالة جديدة
         $message = Message::create([
             'user_id' => Auth::id(),
             'message' => $request->message

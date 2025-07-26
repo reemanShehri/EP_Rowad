@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LikeController;
@@ -10,10 +11,23 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\FaqAController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DashboardAController;
 use App\Http\Controllers\SimpleChatController;
+use App\Http\Controllers\Admin\ChatAController;
+use App\Http\Controllers\Admin\LikeAController;
+use App\Http\Controllers\Admin\PostAController;
+use App\Http\Controllers\Admin\UserAController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\Admin\AIChatAController;
+use App\Http\Controllers\Admin\CommentAController;
+use App\Http\Controllers\Admin\ContactAController;
+use App\Http\Controllers\Admin\ServiceAController;
+use App\Http\Controllers\Admin\CategoryAController;
 use App\Http\Controllers\Admin\Consultant2Controller;
+use App\Http\Controllers\Admin\ConsultantAController;
+use App\Http\Controllers\Admin\SimpleChatAController;
 use App\Http\Controllers\FaqController;  // تأكد أنك تستورد هذا ال Controller
 
 Route::get('/', function () {
@@ -98,6 +112,29 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services.ind
 
 
     });
+
+
+
+
+
+    Route::prefix('admin')->middleware(['auth', IsAdmin::class])->name('admin.')->group(function () {
+
+Route::get('/dashboard', [DashboardAController::class, 'adminIndex'])->name('dashboard');
+
+    Route::resource('users', UserAController::class);
+    Route::resource('consultants', ConsultantAController::class);
+    Route::resource('posts', PostAController::class);
+    Route::resource('comments', CommentAController::class);
+    Route::resource('faqs', FaqAController::class);
+    Route::resource('services', ServiceAController::class);
+    Route::resource('contacts', ContactAController::class);
+    Route::resource('likes', LikeAController::class);
+    Route::resource('chats', ChatAController::class);
+    Route::resource('ai-chats', AIChatAController::class);
+    Route::resource('simple-chats', SimpleChatAController::class);
+    Route::resource('category', CategoryAController::class);
+
+});
 });
 
 require __DIR__.'/auth.php';

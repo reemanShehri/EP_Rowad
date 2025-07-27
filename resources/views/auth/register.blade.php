@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>تسجيل حساب جديد | منتدى روّاد</title>
     <meta name="description" content="منصة عربية لرواد الأعمال للحصول على استشارات في التسويق، التمويل والتقنية">
+<link rel="icon" href="/images/im.png" type="image/png">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -187,18 +188,8 @@
 
                 <!-- نوع المستخدم -->
                 <div class="pt-2">
-                    <label class="block text-sm font-medium text-[var(--text)] mb-2">أنا:</label>
                     <div class="flex space-x-6 space-x-reverse">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="user_type" value="entrepreneur" checked
-                                   class="radio-btn h-5 w-5 text-[var(--accent)] focus:ring-[var(--accent)]">
-                            <span class="mr-2 text-[var(--text)]">رائد أعمال</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="user_type" value="consultant"
-                                   class="radio-btn h-5 w-5 text-[var(--accent)] focus:ring-[var(--accent)]">
-                            <span class="mr-2 text-[var(--text)]">مستشار</span>
-                        </label>
+
                     </div>
                 </div>
 

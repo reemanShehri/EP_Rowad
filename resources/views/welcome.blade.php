@@ -15,6 +15,7 @@
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" href="/images/im.png" type="image/png">
 
     <style>
         :root {
@@ -78,6 +79,12 @@
             background-size: cover;
             height: 100px;
         }
+
+
+/*  */
+
+
+
 
         html {
             scroll-behavior: smooth;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>منتدى روّاد | مجتمع استشاري متكامل</title>
+    <title>منتدى روّاد | مجتمع ريادي متكامل</title>
     <meta name="description" content="منصة عربية لرواد الأعمال للحصول على استشارات في التسويق، التمويل والتقنية">
 
     <!-- Tailwind CSS CDN -->
@@ -158,7 +158,7 @@
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="md:w-1/2 mb-12 md:mb-0">
                         <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
-                            مجتمع <span class="text-[var(--accent)]">استشاري</span> لرواد الأعمال الطموحين
+                            مجتمع <span class="text-[var(--accent)]">ريادي</span> لرواد الأعمال الطموحين
                         </h1>
                         <p class="text-xl text-[var(--light-text)] mb-8">
                             احصل على إجابات من خبراء في مجالات التسويق، التمويل والتقنية. انضم إلى آلاف الرواد الذين طوروا مشاريعهم معنا.
@@ -353,7 +353,7 @@
         <!-- دعوة للعمل -->
         <section class="py-20 bg-[var(--accent)] text-white">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold mb-6">جاهز لبدء رحلتك الاستشارية؟</h2>
+                <h2 class="text-3xl font-bold mb-6">جاهز لبدء رحلتك الريادية</h2>
                 <p class="text-xl mb-8 opacity-90">
                     انضم إلى آلاف الرواد الذين طوروا مشاريعهم بمساعدة خبرائنا
                 </p>

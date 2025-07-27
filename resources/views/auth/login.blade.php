@@ -89,7 +89,7 @@
                     <div class="flex flex-col md:flex-row items-center h-full">
                         <div class="md:w-1/2 mb-12 md:mb-0">
                             <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
-                                مجتمع <span class="text-[var(--accent)]">استشاري</span> لرواد الأعمال الطموحين
+                                مجتمع <span class="text-[var(--accent)]">ريادي</span> لرواد الأعمال الطموحين
                             </h1>
                             <p class="text-xl text-[var(--light-text)] mb-8">
                                 احصل على إجابات من خبراء في مجالات التسويق، التمويل والتقنية.

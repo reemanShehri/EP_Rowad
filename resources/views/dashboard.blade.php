@@ -53,6 +53,14 @@
         <span>المستشارون</span>
     </a>
 
+
+
+    <a href="{{ route('users.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('users.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
+    <i class="fas fa-users ml-3 text-beige-600"></i>
+    <span>المستخدمون</span>
+</a>
+
+
     <a href="{{ route('posts.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('posts.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
         <i class="fas fa-bullhorn ml-3 text-beige-600"></i>
         <span>المنشورات</span>
@@ -217,11 +225,7 @@
     <div class="flex items-center justify-between mb-4">
         <div class="flex items-center space-x-3 space-x-reverse">
             <!-- هل هو سؤال؟ -->
-            <div class="flex items-center">
-                <input type="checkbox" name="is_question" id="is_question" value="1"
-                       class="w-4 h-4 text-beige-600 border-beige-300 rounded focus:ring-beige-500">
-                <label for="is_question" class="mr-2 text-gray-700 text-sm">سؤال؟</label>
-            </div>
+
 
             <!-- الفئة -->
             {{-- <select name="category_id"

@@ -20,11 +20,18 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
     public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
+{
+    $userTypes = [
+        'consultant' => 'مستشار',
+        'entrepreneur' => 'رائد أعمال',
+     
+    ];
+
+    return view('profile.edit', [
+        'user' => $request->user(),
+        'userTypes' => $userTypes // تأكد من تمرير المتغير للفيو
+    ]);
+}
 
 
     // public function update(Request $request)
@@ -100,7 +107,8 @@ public function update(Request $request)
         'bio' => 'nullable|string',
         'specialization' => 'nullable|string|max:100',
         'experience' => 'nullable|integer|min:0',
-        'whatsapp' => 'nullable|string|max:20'
+        'whatsapp' => 'nullable|string|max:20',
+        'user_type' => 'required|in:consultant,entrepreneur',
     ]);
 
     // معالجة الصورة

@@ -13,7 +13,6 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\FaqAController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\DashboardAController;
 use App\Http\Controllers\SimpleChatController;
 use App\Http\Controllers\Admin\ChatAController;
 use App\Http\Controllers\Admin\LikeAController;
@@ -21,10 +20,12 @@ use App\Http\Controllers\Admin\PostAController;
 use App\Http\Controllers\Admin\UserAController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\Admin\AIChatAController;
+use App\Http\Controllers\UserDirectoryController;
 use App\Http\Controllers\Admin\CommentAController;
 use App\Http\Controllers\Admin\ContactAController;
 use App\Http\Controllers\Admin\ServiceAController;
 use App\Http\Controllers\Admin\CategoryAController;
+use App\Http\Controllers\Admin\DashboardAController;
 use App\Http\Controllers\Admin\Consultant2Controller;
 use App\Http\Controllers\Admin\ConsultantAController;
 use App\Http\Controllers\Admin\SimpleChatAController;
@@ -98,7 +99,9 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services.ind
 
     Route::patch('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
 
+Route::get('/users/{user}', [UserDirectoryController::class, 'show'])->name('users.show');
 
+Route::get('/users', [UserDirectoryController::class, 'index'])->name('users.index');
 
 
 

@@ -23,6 +23,13 @@ class UserAController extends Controller
 
 
 
+     public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
+    }
+
+
 
     public function store(Request $request)
     {

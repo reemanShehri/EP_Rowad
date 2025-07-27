@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CommentAController extends Controller
 {
@@ -12,7 +13,8 @@ class CommentAController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::latest()->paginate(15);
+        return view('admin.comments.index', compact('comments'));
     }
 
     /**
@@ -60,6 +62,9 @@ class CommentAController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return redirect()->route('admin.comments.index')->with('success', 'تم حذف التعليق بنجاح.');
     }
 }

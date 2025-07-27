@@ -1,38 +1,79 @@
 <x-app-layout>
-           <!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit User</h2>
+        <h2 class="text-xl font-semibold text-gray-800">تعديل البوست</h2>
     </x-slot>
 
-    <div class="py-6 max-w-xl mx-auto sm:px-6 lg:px-8">
-        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8">
-            @csrf
-            @method('PUT')
+    <div class="py-6">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
-            <x-input-label for="name" value="Name" />
-            <x-text-input name="name" id="name" type="text" class="w-full mb-4" value="{{ old('name', $user->name) }}" required />
-            <x-input-error :messages="$errors->get('name')" />
+                    <!-- العنوان -->
+                    <div class="mb-4">
+                        <label class="block mb-1 font-medium text-gray-700">العنوان</label>
+                        <input type="text" name="title" value="{{ old('title', $post->title) }}" class="w-full border rounded px-3 py-2">
+                    </div>
 
-            <x-input-label for="email" value="Email" />
-            <x-text-input name="email" id="email" type="email" class="w-full mb-4" value="{{ old('email', $user->email) }}" required />
-            <x-input-error :messages="$errors->get('email')" />
+                    <!-- التصنيف -->
+                    <div class="mb-4">
+                        <label class="block mb-1 font-medium text-gray-700">التصنيف</label>
+                        <select name="category_id" class="w-full border rounded px-3 py-2">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ $category->id == $post->category_id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-            <x-input-label for="role" value="Role" />
-            <select name="role" id="role" class="w-full mb-4 rounded border-gray-300">
-                <option value="student" {{ $user->role === 'student' ? 'selected' : '' }}>Student</option>
-                <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-            </select>
-            <x-input-error :messages="$errors->get('role')" />
+                    <!-- محتوى البوست -->
+                    <div class="mb-4">
+                        <label class="block mb-1 font-medium text-gray-700">المحتوى</label>
+                        <textarea name="body" rows="6" class="w-full border rounded px-3 py-2">{{ old('body', $post->body) }}</textarea>
+                    </div>
 
-            <x-input-label for="password" value="New Password (optional)" />
-            <x-text-input name="password" id="password" type="password" class="w-full mb-4" />
-            <x-input-error :messages="$errors->get('password')" />
+                    <!-- هل هو سؤال -->
+                    <div class="mb-4">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="is_question" value="1" {{ $post->is_question ? 'checked' : '' }} class="mr-2">
+                            هل هذا المنشور عبارة عن سؤال؟
+                        </label>
+                    </div>
 
-            <x-input-label for="password_confirmation" value="Confirm Password" />
-            <x-text-input name="password_confirmation" id="password_confirmation" type="password" class="w-full mb-4" />
+                    <!-- الحالة -->
+                    <div class="mb-4">
+                        <label class="block mb-1 font-medium text-gray-700">الحالة</label>
+                        <select name="status" class="w-full border rounded px-3 py-2">
+                            <option value="published" {{ $post->status == 'published' ? 'selected' : '' }}>منشور</option>
+                            <option value="draft" {{ $post->status == 'draft' ? 'selected' : '' }}>مسودة</option>
+                        </select>
+                    </div>
 
-            <x-primary-button class="mt-4">Update</x-primary-button>
-        </form>
+                    <!-- رابط -->
+                    <div class="mb-4">
+                        <label class="block mb-1 font-medium text-gray-700">رابط (اختياري)</label>
+                        <input type="url" name="link" value="{{ old('link', $post->link) }}" class="w-full border rounded px-3 py-2">
+                    </div>
+
+                    <!-- صورة -->
+                    <div class="mb-4">
+                        <label class="block mb-1 font-medium text-gray-700">صورة (اختياري)</label>
+                        <input type="file" name="image" class="w-full border rounded px-3 py-2">
+                        @if ($post->image)
+                            <img src="{{ asset('storage/' . $post->image) }}" class="w-32 mt-2">
+                        @endif
+                    </div>
+
+                    <!-- زر الحفظ -->
+                    <div class="mt-6">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                            حفظ التعديلات
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </x-app-layout>

@@ -74,7 +74,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-3 space-x-reverse">
                                 <!-- هل هو سؤال؟ -->
-                             
+
                             </div>
 
                             <!-- زر النشر -->
@@ -164,7 +164,7 @@
     @csrf
     <input type="hidden" name="id" value="{{ $post->id }}">
     <input type="hidden" name="type" value="post">
-    <button type="submit" class="text-red-600">
+    <button type="submit" class="text-red-600" >
         ❤️ {{ $post->likes()->count() }} like
     </button>
 </form>
@@ -173,6 +173,8 @@
                         <i class="far fa-comment mr-1"></i> comment
                     </button>
                 </div>
+
+
 
                 <!-- قسم التعليقات -->
                 <div class="bg-beige-50 p-4 border-t border-beige-200">
@@ -219,7 +221,7 @@
 
                         <div class="flex-1">
                             <input type="text" name="content" placeholder="أكتب تعليق..."
-                                   class="w-full px-4 py-2 border border-beige-300 rounded-full focus:outline-none focus:ring-2 focus:ring-beige-300" required>
+                                   class="w-full px-4 py-2 border border-beige-300 rounded-full focus:outline-none focus:ring-2 focus:ring-beige-300 mt-10" required>
                         </div>
                         <button type="submit" class="text-beige-600 hover:text-beige-800">
                             <i class="fas fa-paper-plane text-lg"></i>

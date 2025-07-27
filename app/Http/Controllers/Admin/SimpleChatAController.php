@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\SimpleChat;
 use Illuminate\Http\Request;
+use App\Models\SimpleMessage;
+use App\Http\Controllers\Controller;
 
 class SimpleChatAController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+   public function index()
+{
+    $chats = SimpleMessage::with('user')->latest()->paginate(20);
+    return view('admin.simple_chat.index', compact('chats'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -58,8 +62,12 @@ class SimpleChatAController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+   public function destroy(string $id)
+{
+    $chat = \App\Models\SimpleMessage::findOrFail($id);
+    $chat->delete();
+
+    return redirect()->back()->with('success', 'تم حذف الرسالة بنجاح');
+}
+
 }

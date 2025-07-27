@@ -50,6 +50,11 @@
 
                     </div>
 
+
+
+
+
+
                     <!-- المعلومات الأساسية -->
                     <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">المعلومات الأساسية</h3>
 
@@ -70,6 +75,20 @@
                     <!-- المعلومات المهنية -->
                     <h3 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">المعلومات المهنية</h3>
 
+
+                         <div>
+    <label for="user_type" class="block text-sm font-medium text-gray-700">نوع المستخدم</label>
+    <select id="user_type" name="user_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        @foreach($userTypes as $value => $label)
+            <option value="{{ $value }}" {{ old('user_type', Auth::user()->user_type) == $value ? 'selected' : '' }}>
+                {{ $label }}
+            </option>
+        @endforeach
+    </select>
+    @error('user_type')
+        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
                             <label for="bio" class="block text-sm font-medium text-gray-700">نبذة عنك</label>

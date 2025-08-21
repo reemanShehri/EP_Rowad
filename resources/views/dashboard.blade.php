@@ -40,7 +40,7 @@
                     <p class="text-sm text-beige-600">{{ auth()->user()->role == 'consultant' ? 'مستشار' : 'رائد أعمال' }}</p>
                 </div>
                    <div class="p-2 text-red-600">
-
+{{ auth()->user()->role }}
     </div>
             </div>
 
@@ -87,6 +87,7 @@
     <a href="{{ route('simple-chat.index') }}" class="flex items-center p-3 rounded-lg transition-colors {{ request()->routeIs('simple-chat.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">
         <i class="fas fa-comments ml-3 text-beige-600"></i>
         <span>الدردشة الجماعية</span>
+
     </a>
 
 
@@ -94,7 +95,7 @@
 
 {{ auth()->user()->role }}
 
-    @if(auth()->user()->role === 'admin')
+@if(strtolower(auth()->user()->role) === 'admin')
         <a href="{{ route('admin.dashboard') }}"
            class="flex items-center p-3 rounded-lg transition-colors
            {{ request()->routeIs('admin.*') ? 'bg-beige-100 text-beige-800' : 'text-gray-600 hover:bg-beige-50' }}">

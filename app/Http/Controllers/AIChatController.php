@@ -40,25 +40,7 @@ class AIChatController extends Controller
 
     private function getAIResponse($message)
     {
-        // 1. الخيار الأول: استخدام خدمة خارجية مثل OpenAI
-        /*
-        $apiKey = env('OPENAI_API_KEY');
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiKey,
-            'Content-Type' => 'application/json'
-        ])->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'user', 'content' => $message]
-            ],
-            'temperature' => 0.7
-        ]);
-
-        return $response->json()['choices'][0]['message']['content'] ?? 'لا يمكن تفسير الرد';
-        */
-
-        // 2. الخيار الثاني: ردود مبرمجة مسبقاً (للاختبار)
-        $responses = [
+             $responses = [
             "مرحبا" => "مرحباً بك! كيف يمكنني مساعدتك اليوم؟",
             "كيف حالك" => "أنا بخير، شكراً لسؤالك! كيف يمكنني مساعدتك؟",
             "شكرا" => "العفو! هل هناك أي شيء آخر تحتاج مساعدتي فيه؟",

@@ -39,6 +39,9 @@
                     <p class="font-medium text-gray-800">{{ auth()->user()->name }}</p>
                     <p class="text-sm text-beige-600">{{ auth()->user()->role == 'consultant' ? 'مستشار' : 'رائد أعمال' }}</p>
                 </div>
+                   <div class="p-2 text-red-600">
+    
+    </div>
             </div>
 
             <!-- قائمة التنقل -->
@@ -88,6 +91,8 @@
 
 
      @auth
+
+
     @if(auth()->user()->role === 'admin')
         <a href="{{ route('admin.dashboard') }}"
            class="flex items-center p-3 rounded-lg transition-colors

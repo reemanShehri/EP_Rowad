@@ -42,26 +42,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/simple-chat', [SimpleChatController::class, 'store'])->name('simple-chat.store');
 });
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/chat-all', [ChatController::class, 'index'])->name('chat.all');
-//     Route::post('/chat-all', [ChatController::class, 'store'])->name('chat.store');
-// });
-
-
-// صفحة الداشبورد مع middleware التحقق من الدخول
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // البروفايل
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // روتات الاستشارات (resource route يغطي كل دوال CRUD)
     Route::resource('consultations', ConsultationController::class);
 
-    // صفحة المستشارين مع فلترة
     Route::get('/consultants', [Consultant2Controller::class, 'index'])->name('consultants.index');
 
     // صفحة الأسئلة الشائعة
@@ -73,7 +64,7 @@ Route::post('/ai-chat', [AIChatController::class, 'ask']);
 
 Route::get('/chat', [AIChatController::class, 'index'])->name('chat.index');
 
-Route::post('/chat/send', [AIChatController::class, 'chat'])->name('chat.send');
+Route::post('/chat/send', [AIChatController::class, 'send'])->name('chat.send');
 
     Route::resource('posts', PostController::class);
 

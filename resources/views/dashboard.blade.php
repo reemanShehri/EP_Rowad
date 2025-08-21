@@ -40,7 +40,7 @@
                     <p class="text-sm text-beige-600">{{ auth()->user()->role == 'consultant' ? 'مستشار' : 'رائد أعمال' }}</p>
                 </div>
                    <div class="p-2 text-red-600">
-    
+
     </div>
             </div>
 
@@ -92,6 +92,7 @@
 
      @auth
 
+{{ auth()->user()->role }}
 
     @if(auth()->user()->role === 'admin')
         <a href="{{ route('admin.dashboard') }}"

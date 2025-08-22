@@ -53,4 +53,11 @@ public function tags()
 {
     return $this->belongsToMany(Tag::class);
 }
+
+
+
+    public function isLikedBy($user)
+    {
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
 }

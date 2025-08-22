@@ -11,6 +11,8 @@
         <i class="fas fa-bars"></i>
     </button>
 
+
+
     <!-- شريط التنقل الجانبي -->
     <div id="sidebar" class="fixed inset-y-0 right-0 w-64 bg-white shadow-lg z-10 transform transition-transform duration-300 ease-in-out translate-x-0">
         <div class="flex flex-col h-full">
@@ -40,7 +42,11 @@
                     <p class="text-sm text-beige-600">{{ auth()->user()->role == 'consultant' ? 'مستشار' : 'رائد أعمال' }}</p>
                 </div>
                    <div class="p-2 text-red-600">
-{{ auth()->user()->role }}
+@if(auth()->check() && auth()->user()->role === 'admin')
+    {{ auth()->user()->role }}
+
+@endif
+
     </div>
             </div>
 
@@ -93,7 +99,6 @@
 
      @auth
 
-{{ auth()->user()->role }}
 
 @if(strtolower(auth()->user()->role) === 'admin')
         <a href="{{ route('admin.dashboard') }}"
@@ -106,6 +111,10 @@
 @endauth
 
 </nav>
+
+
+
+
 
 
             <!-- تسجيل الخروج -->

@@ -173,4 +173,53 @@ public function edit(Post $post)
     return view('posts.edit', compact('post'));
 
 }
+
+
+
+
+// public function like(Post $post)
+// {
+//     $user = auth()->user();
+
+//     $like = $post->likes()->where('user_id', $user->id)->first();
+
+//     if ($like) {
+//         $like->delete();
+//         $status = 'unliked';
+//     } else {
+//         $post->likes()->create(['user_id' => $user->id]);
+//         $status = 'liked';
+//     }
+
+//     return response()->json([
+//         'status' => $status,
+//         'likes_count' => $post->likes()->count(),
+//     ]);
+// }
+
+
+public function like(Post $post)
+{
+    $user = auth()->user();
+
+    $like = $post->likes()->where('user_id', $user->id)->first();
+
+    if ($like) {
+        $like->delete();
+        $status = 'unliked';
+    } else {
+        $post->likes()->create(['user_id' => $user->id]);
+        $status = 'liked';
+    }
+
+    // return response()->json([
+    //     'status' => $status,
+    //     'likes_count' => $post->likes()->count(),
+    // ]);
+
+       return back();
+}
+
+
+
 }

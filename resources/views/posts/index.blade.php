@@ -62,6 +62,32 @@
                                 </button>
                             </div>
                         </div>
+<script>
+    const imageInput = document.getElementById("post-image");
+    const imagePreview = document.getElementById("image-preview");
+    const previewImage = document.getElementById("preview-image");
+    const removeImage = document.getElementById("remove-image");
+
+    // عند اختيار صورة
+    imageInput.addEventListener("change", function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                imagePreview.classList.remove("hidden");
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // زر إزالة الصورة
+    removeImage.addEventListener("click", function() {
+        imageInput.value = ""; // تفريغ حقل رفع الملف
+        previewImage.src = "";
+        imagePreview.classList.add("hidden");
+    });
+</script>
 
                         <!-- رابط خارجي -->
                         <div>
@@ -153,25 +179,146 @@
                 </div>
 
                 <!-- إحصائيات المنشور -->
-                <div class="px-4 py-2 border-t border-beige-200 flex items-center text-sm text-gray-500">
+                {{-- <div class="px-4 py-2 border-t border-beige-200 flex items-center text-sm text-gray-500">
                     <span class="mr-3"><i class="far fa-heart mr-1"></i> {{ $post->likes_count }} إعجاب</span>
                     <span><i class="far fa-comment mr-1"></i> {{ $post->comments_count }} تعليق</span>
-                </div>
+                </div> --}}
 
                 <!-- أزرار التفاعل -->
                 <div class="px-4 py-2 border-t border-beige-200 flex space-x-4 space-x-reverse">
-                 <form method="POST" action="{{ route('like') }}">
-    @csrf
+    {{-- <form method="POST" action="{{ route('like') }}"> --}}
+    <form method="POST" action="{{ route('posts.like', ['post' => $post->id]) }}">
+
+        @csrf
     <input type="hidden" name="id" value="{{ $post->id }}">
     <input type="hidden" name="type" value="post">
-    <button type="submit" class="text-red-600" >
+
+
+  {{-- <button type="submit" class="text-red-600" >
         ❤️ {{ $post->likes()->count() }} like
-    </button>
+    </button> --}}
+
 </form>
 
-                    <button class="comment-btn flex-1 py-2 text-center text-gray-600 hover:text-beige-600 transition-colors">
-                        <i class="far fa-comment mr-1"></i> comment
-                    </button>
+         <div class="flex items-center space-x-2">
+    <button class="like-btn flex items-center {{ $post->isLikedBy(auth()->user()) ? 'text-red-500' : 'text-gray-600' }}"
+            onclick="toggleLike({{ $post->id }})"
+            data-post-id="{{ $post->id }}">
+        @if($post->isLikedBy(auth()->user()))
+            <i class="fas fa-heart mr-1"></i> <span></span>
+        @else
+            <i class="far fa-heart mr-1"></i> <span></span>
+        @endif
+    </button>
+
+    <span class="likes-count text-sm text-gray-700" id="likes-count-{{ $post->id }}">
+        {{ $post->likes->count() }}
+    </span>
+</div>
+
+<script>
+function toggleLike(postId) {
+    const likeBtn = $(`button[data-post-id="${postId}"]`);
+
+    $.ajax({
+        url: `/posts/${postId}/toggle-like`,
+        type: 'POST',
+        data: {
+            post_id: postId,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function() {
+            likeBtn.prop('disabled', true).addClass('loading');
+        },
+        success: function(response) {
+            if (response.success) {
+                updateLikeUI(postId, response);
+            } else {
+                showError(response.message || 'حدث خطأ غير متوقع');
+            }
+        },
+        error: function(xhr) {
+            const errorMsg = xhr.responseJSON?.message || 'فشل الاتصال بالخادم';
+            showError(errorMsg);
+        },
+        complete: function() {
+            likeBtn.prop('disabled', false).removeClass('loading');
+        }
+    });
+}
+
+function updateLikeUI(postId, data) {
+    const likeBtn = $(`button[data-post-id="${postId}"]`);
+    const likesCount = $(`#likes-count-${postId}`);
+    const likedUsersDiv = $(`#liked-users-${postId}`);
+    const usersListDiv = $(`#users-list-${postId}`);
+
+    likeBtn.text(data.isLiked ? ' 👎 UnLike' : ' ❤️ Like')
+           .toggleClass('liked', data.isLiked);
+
+    likesCount.text(data.likesCount);
+
+    if (data.likesCount > 0) {
+        likedUsersDiv.show();
+        usersListDiv.empty();
+        data.likedUsers.forEach(user => {
+            usersListDiv.append(`<span class="user-badge">${user.name}</span>`);
+        });
+    } else {
+        likedUsersDiv.hide();
+    }
+}
+
+function showError(message) {
+    alert(message);
+    console.error('Error:', message);
+}
+</script>
+
+
+{{-- <button type="button"
+        class="text-red-600 like-btn"
+        data-id="{{ $post->id }}">
+    ❤️ <span id="likes-count-{{ $post->id }}">{{ $post->likes()->count() }}</span> like
+</button> --}}
+
+
+{{-- <script>
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const postId = button.getAttribute('data-id');
+
+            const response = await fetch(`/posts/${postId}/like`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            // حدّث العدد على الصفحة بدون reload
+            document.getElementById(`likes-count-${postId}`).innerText = data.likes_count;
+        });
+    });
+});
+</script> --}}
+
+
+
+
+
+
+                 <button class="comment-btn flex items-center py-2 text-gray-600 hover:text-beige-600 transition-colors">
+    <i class="far fa-comment mr-1"></i>
+    <span id="comments-count-{{ $post->id }}">
+        {{ $post->comments_count }}
+    </span>
+</button>
+
                 </div>
 
 
@@ -199,6 +346,11 @@
     <button type="submit" class="text-red-600">
         ❤️ {{ $comment->likes()->count() }}
     </button>
+
+
+
+
+
 </form>
 
                         </div>
@@ -244,6 +396,8 @@
     </div>
 
     @push('scripts')
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // معاينة الصورة قبل الرفع

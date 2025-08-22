@@ -88,6 +88,13 @@ Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
   Route::post('/like', [LikeController::class, 'store'])->name('like');
 
+// routes/web.php
+Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+
+
+Route::post('/posts/{post}/toggle-like', [LikeController::class, 'toggleLike'])
+    ->name('toggle-like');
+    
     Route::patch('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
 
 Route::get('/users/{user}', [UserDirectoryController::class, 'show'])->name('users.show');

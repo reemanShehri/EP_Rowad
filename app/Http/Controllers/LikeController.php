@@ -30,4 +30,28 @@ public function store(Request $request)
     return back();
 }
 
+
+
+public function toggleLike(Post $post)
+{
+    $user = auth()->user();
+
+    $like = $post->likes()->where('user_id', $user->id)->first();
+
+    if ($like) {
+        $like->delete();
+        $isLiked = false;
+    } else {
+        $post->likes()->create(['user_id' => $user->id]);
+        $isLiked = true;
+    }
+
+    return response()->json([
+        'success' => true,
+        'isLiked' => $isLiked,
+        'likesCount' => $post->likes()->count(),
+        'likedUsers' => $post->likes()->with('user:id,name')->get()->pluck('user')
+    ]);
+}
+
 }

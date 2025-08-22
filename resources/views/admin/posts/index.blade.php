@@ -30,11 +30,18 @@
                             <td class="px-4 py-2">{{ $post->created_at->format('Y-m-d') }}</td>
                             <td class="px-4 py-2 space-x-2">
                                 <a href="{{ route('posts.edit', $post->id) }}" class="text-blue-600 hover:underline">تعديل</a>
-                                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+                                {{-- <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:underline">حذف</button>
-                                </form>
+                                </form> --}}
+
+                                <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="inline-block" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="text-red-600 hover:underline">حذف</button>
+</form>
+
                             </td>
                         </tr>
                         @endforeach

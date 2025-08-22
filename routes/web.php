@@ -94,7 +94,7 @@ Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.
 
 Route::post('/posts/{post}/toggle-like', [LikeController::class, 'toggleLike'])
     ->name('toggle-like');
-    
+
     Route::patch('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
 
 Route::get('/users/{user}', [UserDirectoryController::class, 'show'])->name('users.show');
@@ -109,6 +109,7 @@ Route::get('/users', [UserDirectoryController::class, 'index'])->name('users.ind
     // روتات الادمن داخل المجموعة مع بادئة admin
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/posts/{post}/liked-users', [PostController::class, 'likedUsers'])->name('posts.liked-users');
 
 
 

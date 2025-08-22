@@ -199,7 +199,7 @@
     </button> --}}
 
 </form>
-
+{{--
          <div class="flex items-center space-x-2">
     <button class="like-btn flex items-center {{ $post->isLikedBy(auth()->user()) ? 'text-red-500' : 'text-gray-600' }}"
             onclick="toggleLike({{ $post->id }})"
@@ -214,7 +214,60 @@
     <span class="likes-count text-sm text-gray-700" id="likes-count-{{ $post->id }}">
         {{ $post->likes->count() }}
     </span>
+</div> --}}
+
+<div class="flex items-center space-x-2 space-x-reverse">
+    <!-- زر اللايك -->
+    <button class="like-btn flex items-center {{ $post->isLikedBy(auth()->user()) ? 'text-red-500' : 'text-gray-600' }}"
+            onclick="toggleLike({{ $post->id }})"
+            data-post-id="{{ $post->id }}">
+        @if($post->isLikedBy(auth()->user()))
+            <i class="fas fa-heart mr-1"></i>
+        @else
+            <i class="far fa-heart mr-1"></i>
+        @endif
+    </button>
+
+    <!-- عدد اللايكات -->
+    <span class="likes-count text-sm text-gray-700" id="likes-count-{{ $post->id }}">
+        {{ $post->likes->count() }}
+    </span>
+
+    <!-- أيقونة العين لعرض المستخدمين -->
+    <button onclick="toggleLikesModal({{ $post->id }})" class="text-gray-600 hover:text-gray-800">
+        <i class="fas fa-eye"></i>
+    </button>
 </div>
+
+<!-- المودال لإظهار المستخدمين -->
+<div id="likes-modal-{{ $post->id }}" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-4 w-80">
+        <div class="flex justify-between items-center mb-2">
+            <h3 class="font-bold text-lg">أعجبوا بهذا المنشور</h3>
+            <button onclick="closeLikesModal({{ $post->id }})" class="text-gray-500 hover:text-gray-800">&times;</button>
+        </div>
+        <ul class="divide-y divide-gray-200 max-h-60 overflow-y-auto" id="likes-users-list-{{ $post->id }}">
+            @foreach($post->likes as $like)
+                <li class="py-1">{{ $like->user->name }}</li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+
+<script>
+function toggleLikesModal(postId) {
+    const modal = document.getElementById(`likes-modal-${postId}`);
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
+}
+
+function closeLikesModal(postId) {
+    const modal = document.getElementById(`likes-modal-${postId}`);
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+</script>
+
 
 <script>
 function toggleLike(postId) {

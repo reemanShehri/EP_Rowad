@@ -167,6 +167,20 @@ public function destroy(Post $post)
 
 
 
+
+public function likedUsers(Post $post)
+{
+    $users = $post->likes()->with('user')->get()->map(fn($like) => [
+        'id' => $like->user->id,
+        'name' => $like->user->name,
+    ]);
+
+    return response()->json(['users' => $users]);
+}
+
+
+
+
 public function edit(Post $post)
 {
 

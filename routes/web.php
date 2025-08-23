@@ -81,6 +81,7 @@ Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.
     Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])
     ->name('posts.comments.store');
+    Route::resource('comments', CommentController::class)->only(['edit', 'update', 'destroy']);
 
 
   Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');

@@ -379,45 +379,123 @@ document.addEventListener('DOMContentLoaded', () => {
                 <!-- قسم التعليقات -->
                 <div class="bg-beige-50 p-4 border-t border-beige-200">
                     <!-- عرض بعض التعليقات -->
-                    @foreach($post->comments->take(2) as $comment)
-                    <div class="mb-3 flex items-start">
-                        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-beige-300 bg-beige-100 flex-shrink-0">
-                            <img src="{{ $comment->user->avatar ? asset('images/profile_photos/' . $comment->user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) }}"
-                                 class="w-full h-full object-cover" alt="Profile Photo">
-                        </div>
-                        <div class="mr-3 bg-white p-3 rounded-lg border border-beige-200 flex-1">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="font-semibold text-sm">{{ $comment->user->name }}</span>
-                                <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
-                            </div>
-                            <p class="text-gray-700 text-sm">{{ $comment->body }}</p>
+                {{-- كل التعليقات مخفية بشكل افتراضي --}}
+<div id="all-comments-{{ $post->id }}" style="display:none;">
+@foreach($post->comments as $comment)
+    <div class="mb-3 flex items-start" id="comment-{{ $comment->id }}">
+        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-beige-300 bg-beige-100 flex-shrink-0">
+            <img src="{{ $comment->user->avatar ? asset('images/profile_photos/' . $comment->user->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) }}"
+                 class="w-full h-full object-cover" alt="Profile Photo">
+        </div>
+        <div class="mr-3 bg-white p-3 rounded-lg border border-beige-200 flex-1">
+            <div class="flex justify-between items-center mb-1">
+                <span class="font-semibold text-sm">{{ $comment->user->name }}</span>
+                <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+            </div>
 
-                            <form method="POST" action="{{ route('like') }}">
-    @csrf
-    <input type="hidden" name="id" value="{{ $comment->id }}">
-    <input type="hidden" name="type" value="comment">
-    <button type="submit" class="text-red-600">
-        ❤️ {{ $comment->likes()->count() }}
-    </button>
+            <!-- نص التعليق -->
+            <p class="text-gray-700 text-sm comment-body">{{ $comment->body }}</p>
 
+            <div class="flex items-center space-x-2 space-x-reverse mt-2">
+                <!-- زر تعديل -->
 
 
+                <!-- زر حذف -->
+                @if(auth()->id() === $comment->user_id || auth()->id() === $post->user_id)
+                <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="inline-block delete-comment-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-600 hover:underline text-sm">     <i class="fas fa-trash-alt"></i></button>
+                </form>
+                @endif
+            </div>
+        </div>
+    </div>
+@endforeach
+</div>
 
 
-</form>
 
-                        </div>
-                    </div>
-                    @endforeach
 
-                    <br>
 
-                    <!-- رابط عرض جميع التعليقات -->
-                    @if($post->comments_count > 2)
-                    <a href="{{ route('posts.show', $post) }}" class="block text-center text-sm text-beige-600 hover:text-beige-800 mb-3">
-                        عرض جميع التعليقات ({{ $post->comments_count }})
-                    </a>
+
+{{-- <div id="all-comments-{{ $post->id }}" style="display:none;">
+    @foreach($post->comments as $comment)
+        <div class="mb-3 flex items-start">
+            <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-beige-300 bg-beige-100 flex-shrink-0">
+                <img src="{{ $comment->user->avatar
+                    ? asset('images/profile_photos/' . $comment->user->avatar)
+                    : 'https://ui-avatars.com/api/?name=' . urlencode($comment->user->name) }}"
+                     class="w-full h-full object-cover" alt="Profile Photo">
+            </div>
+
+            <div class="mr-3 bg-white p-3 rounded-lg border border-beige-200 flex-1">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-semibold text-sm">{{ $comment->user->name }}</span>
+                    <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                </div>
+
+                <p class="text-gray-700 text-sm">{{ $comment->body }}</p>
+
+                <div class="flex items-center mt-2 space-x-2">
+                    <!-- زر الإعجاب -->
+                    <form method="POST" action="{{ route('like') }}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $comment->id }}">
+                        <input type="hidden" name="type" value="comment">
+                        <button type="submit" class="text-red-600">
+                            ❤️ {{ $comment->likes()->count() }}
+                        </button>
+                    </form>
+
+                    <!-- خيارات صاحب التعليق -->
+                    @if(auth()->id() === $comment->user_id)
+                        <a href="{{ route('comments.edit', $comment) }}" class="text-blue-600 hover:underline text-sm">تعديل</a>
+                        <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="inline-block" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline text-sm">حذف</button>
+                        </form>
+                    <!-- خيار صاحب البوست فقط -->
+                    @elseif(auth()->id() === $post->user_id)
+                        <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="inline-block" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline text-sm">حذف</button>
+                        </form>
                     @endif
+                </div>
+
+            </div>
+        </div>
+    @endforeach
+</div> --}}
+
+
+{{-- زر عرض/إخفاء التعليقات --}}
+@if($post->comments->count() > 0)
+   <button
+    id="toggle-comments-btn-{{ $post->id }}"
+    onclick="
+        let comments = document.getElementById('all-comments-{{ $post->id }}');
+        if (comments.style.display === 'none') {
+            comments.style.display = 'block';
+            this.innerText = 'إخفاء التعليقات';
+        } else {
+            comments.style.display = 'none';
+            this.innerText = 'عرض جميع التعليقات ({{ $post->comments->count() }})';
+        }
+    "
+    class="text-gray-600 mt-2 px-3 py-1 rounded hover:bg-gray-100 transition-colors"
+>
+    عرض جميع التعليقات ({{ $post->comments->count() }})
+</button>
+
+@endif
+
+
+
+
 
                     <!-- نموذج إضافة تعليق جديد -->
                     <form action="{{ route('comments.store') }}" method="POST" class="flex items-center space-x-3 space-x-reverse">
@@ -428,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <input type="text" name="content" placeholder="أكتب تعليق..."
                                    class="w-full px-4 py-2 border border-beige-300 rounded-full focus:outline-none focus:ring-2 focus:ring-beige-300 mt-10" required>
                         </div>
-                        <button type="submit" class="text-beige-600 hover:text-beige-800">
+                        <button type="submit" class="text-beige-600 hover:text-beige-800 bt-5n" style="margin-top: 32px;">
                             <i class="fas fa-paper-plane text-lg"></i>
                         </button>
                     </form>

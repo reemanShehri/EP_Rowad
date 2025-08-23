@@ -420,13 +420,17 @@
 
                     <!-- تفاعلات المنشور -->
                     <div class="flex space-x-4 space-x-reverse text-sm mt-3">
-                        {{-- <button class="text-gray-500 hover:text-red-500 transition-colors">
-                            <i class="far fa-heart ml-1"></i> إعجاب
-                        </button>
+                      <!-- زر الإعجاب -->
+    <button class="flex items-center text-gray-500 hover:text-red-500 transition-colors">
+        <i class="far fa-heart ml-1"></i>
+        <span>{{ $post->likes->count() }}</span>
+    </button>
 
-                        <button class="text-gray-500 hover:text-beige-900 transition-colors">
-                            <i class="far fa-comment ml-1"></i> تعليق
-                        </button> --}}
+    <!-- زر التعليق -->
+    <button class="flex items-center text-gray-500 hover:text-blue-500 transition-colors">
+        <i class="far fa-comment ml-1"></i>
+        <span>{{ $post->comments->count() }}</span>
+    </button>
 
                     </div>
                 </div>

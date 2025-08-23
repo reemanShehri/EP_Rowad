@@ -236,4 +236,12 @@ public function like(Post $post)
 
 
 
+// public function show(Post $post)
+// {
+//     // بترجع صفحة لعرض البوست مع كل الكومنتات
+//     return view('posts.show', compact('post'));
+// }
+
+
+
 }

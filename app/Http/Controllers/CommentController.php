@@ -40,5 +40,48 @@ class CommentController extends Controller
     return back()->with('success', 'تم إضافة التعليق بنجاح');
 }
 
+// CommentController.php
+public function edit(Comment $comment)
+{
+    // تأكد أن المستخدم صاحب التعليق أو صاحب البوست
+    if(auth()->id() !== $comment->user_id && auth()->id() !== $comment->post->user_id) {
+        abort(403);
+    }
+
+    return view('comments.edit', compact('comment'));
+}
+
+public function update(Request $request, Comment $comment)
+{
+    if(auth()->id() !== $comment->user_id) {
+        return response()->json(['error' => 'غير مسموح'], 403);
+    }
+
+    $request->validate(['content' => 'required|string|max:1000']);
+
+    $comment->update(['body' => $request->content]);
+
+    return response()->json(['body' => $comment->body]);
+}
+
+
+   public function destroy(Comment $comment)
+    {
+        // تأكد أن صاحب التعليق أو صاحب البوست فقط يستطيع الحذف
+        if(auth()->id() !== $comment->user_id && auth()->id() !== $comment->post->user_id) {
+            abort(403, 'غير مسموح');
+        }
+
+        $comment->delete();
+
+        // لو كان الطلب AJAX
+        if(request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        // إذا كان Submit عادي
+        return back()->with('success', 'تم حذف التعليق بنجاح');
+    }
+
 
 }

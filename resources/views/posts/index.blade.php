@@ -128,7 +128,9 @@
 
 
                         <div>
-                            <h4 class="font-semibold text-gray-800">{{ $post->user->name }}</h4>
+                               <a href="{{ route('profile.show', $post->user->id) }}" class="text-blue-600 hover:underline">
+ <h4 class="font-semibold text-gray-800">{{ $post->user->name }}</h4>
+                               </a>
                             <p class="text-xs text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
@@ -248,7 +250,11 @@
         </div>
         <ul class="divide-y divide-gray-200 max-h-60 overflow-y-auto" id="likes-users-list-{{ $post->id }}">
             @foreach($post->likes as $like)
-                <li class="py-1">{{ $like->user->name }}</li>
+<li class="py-1">
+    <a href="{{ route('profile.show', $like->user->id) }}" class="text-blue-600 hover:underline">
+        {{ $like->user->name }}
+    </a>
+</li>
             @endforeach
         </ul>
     </div>
@@ -306,7 +312,7 @@ function updateLikeUI(postId, data) {
     const likedUsersDiv = $(`#liked-users-${postId}`);
     const usersListDiv = $(`#users-list-${postId}`);
 
-    likeBtn.text(data.isLiked ? ' 👎 UnLike' : ' ❤️ Like')
+    likeBtn.text(data.isLiked ? ' ❤️ UnLike' : ' ❤️ Like')
            .toggleClass('liked', data.isLiked);
 
     likesCount.text(data.likesCount);
@@ -389,7 +395,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="mr-3 bg-white p-3 rounded-lg border border-beige-200 flex-1">
             <div class="flex justify-between items-center mb-1">
+                    <a href="{{ route('profile.show', $comment->user->id) }}" class="text-blue-600 hover:underline">
+
                 <span class="font-semibold text-sm">{{ $comment->user->name }}</span>
+                    </a>
                 <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
             </div>
 

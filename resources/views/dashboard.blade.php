@@ -38,7 +38,9 @@
                 <!-- مؤشر حالة الاتصال -->
                 <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
             </div>                <div>
-                    <p class="font-medium text-gray-800">{{ auth()->user()->name }}</p>
+<a href="{{ route('profile.edit', auth()->user()->id) }}" class="font-medium text-gray-800 hover:underline">
+    {{ auth()->user()->name }}
+</a>
                     <p class="text-sm text-beige-600">{{ auth()->user()->role == 'consultant' ? 'مستشار' : 'رائد أعمال' }}</p>
                 </div>
                    <div class="p-2 text-red-600">

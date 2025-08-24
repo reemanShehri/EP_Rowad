@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -9,8 +10,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 
@@ -24,7 +25,7 @@ class ProfileController extends Controller
     $userTypes = [
         'consultant' => 'مستشار',
         'entrepreneur' => 'رائد أعمال',
-     
+
     ];
 
     return view('profile.edit', [
@@ -175,5 +176,13 @@ public function updatePhoto(Request $request)
 
     return redirect()->back()->with('success', 'تم تحديث صورة البروفايل.');
 }
+
+
+public function show($id)
+{
+    $user = User::findOrFail($id);
+    return view('users.show', compact('user'));
+}
+
 
 }

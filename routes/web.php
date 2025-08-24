@@ -90,6 +90,10 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services.ind
   Route::post('/like', [LikeController::class, 'store'])->name('like');
 
 // routes/web.php
+
+
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+
 Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
 
 

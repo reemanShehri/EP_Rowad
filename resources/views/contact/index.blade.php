@@ -37,7 +37,7 @@
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-800">الدعم الفوري</h3>
                                     <p class="text-gray-600">متاح من الساعة 8 صباحاً حتى 5 مساءً</p>
-                                    <a href="tel:+966123456789" class="text-gray-800 hover:text-[#c2a675] font-medium mt-1 block">+966 12 345 6789</a>
+                                    <a href="tel:+968 9445 6684" class="text-gray-800 hover:text-[#c2a675] font-medium mt-1 block">+968 9445 6684</a>
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-800">واتساب</h3>
                                     <p class="text-gray-600">متاح 24/7 للاستفسارات العامة</p>
-                                    <a href="https://wa.me/966123456789" class="text-gray-800 hover:text-[#c2a675] font-medium mt-1 block">+966 12 345 6789</a>
+                                    <a href="https://wa.me/+968 9445 6684" class="text-gray-800 hover:text-[#c2a675] font-medium mt-1 block">+968 9445 6684</a>
                                 </div>
                             </div>
 

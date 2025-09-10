@@ -16,10 +16,22 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <div class="mt-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                إذا لم تتمكن من استعادة كلمة المرور، يمكنك التواصل مع المسؤول لطلب تحديث كلمة المرور عبر واتساب.
+            </p>
+            <div class="flex items-center mt-2">
+                <span class="font-semibold">رقم واتساب المسؤول:</span>
+                <a href="https://wa.me/+972592038364" class="ml-2 text-blue-600 hover:underline" target="_blank">اضغط هنا للتواصل مباشرة
+            </div>
+        </div>
+
         <div class="flex items-center justify-end mt-4">
             <x-primary-button>
                 {{ __('Email Password Reset Link') }}
             </x-primary-button>
         </div>
+
+
     </form>
 </x-guest-layout>
